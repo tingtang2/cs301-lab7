@@ -14,7 +14,7 @@ DependencyChecker::DependencyChecker(int numRegisters)
 }
 
 void DependencyChecker::addInstruction(Instruction i)
-/* Adds an instruction to the list of instructions and checks to see if that 
+/* Adds an instruction to the list of instructions and checks to see if that
  * instruction results in any new data dependencies.  If new data dependencies
  * are created with the addition of this instruction, appropriate entries
  * are added to the list of dependences.
@@ -24,10 +24,19 @@ void DependencyChecker::addInstruction(Instruction i)
 
   switch(iType){
   case RTYPE:
-    // Your code here
+    // 2 source reg's rs,rt -> 2x checkForReadDependence
+    // 1 dest reg rt -> 1x checkForReadDependence
+    checkForReadDependence(i.getRS());
+    checkForReadDependence(i.getRT());
+    checkForWriteDependence(i.getRD());
+    cout << '\n';
     break;
   case ITYPE:
-    // Your code here
+    // 1 source reg rs -> 1x checkForReadDependence
+    // 1 dest reg rt -> 1x checkForReadDependence
+    checkForReadDependence(i.getRS());
+    checkForWriteDependence(i.getRT());
+    cout << '\n';
     break;
   case JTYPE:
     // Your code here
@@ -47,7 +56,7 @@ void DependencyChecker::checkForReadDependence(unsigned int reg)
    * the appropriate RegisterInfo entry regardless of dependence detection.
    */
 {
-  
+
   // Your code here
 
 }
@@ -55,11 +64,11 @@ void DependencyChecker::checkForReadDependence(unsigned int reg)
 
 void DependencyChecker::checkForWriteDependence(unsigned int reg)
   /* Determines if a write data dependence occurs when reg is written by the current
-   * instruction.  If so, adds an entry to the list of dependences. Also updates 
+   * instruction.  If so, adds an entry to the list of dependences. Also updates
    * the appropriate RegisterInfo entry regardless of dependence detection.
    */
 {
-  
+
   // Your code here
 
 }
@@ -68,7 +77,7 @@ void DependencyChecker::checkForWriteDependence(unsigned int reg)
 void DependencyChecker::printDependences()
   /* Prints out the sequence of instructions followed by the sequence of data
    * dependencies.
-   */ 
+   */
 {
   // First, print all instructions
   list<Instruction>::iterator liter;
