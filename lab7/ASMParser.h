@@ -1,7 +1,6 @@
 #ifndef __ASMPARSER_H__
 #define __ASMPARSER_H__
 
-using namespace std;
 
 #include <iostream>
 #include <fstream>
@@ -11,12 +10,14 @@ using namespace std;
 #include <vector>
 #include <sstream>
 
+using namespace std;
+
 /* This class reads in a MIPS assembly file and checks its syntax.  If
- * the file is syntactically correct, this class will retain a list 
+ * the file is syntactically correct, this class will retain a list
  * of Instructions (one for each instruction from the file).  This
  * list of Instructions can be iterated through.
  */
-   
+
 
 class ASMParser{
  public:
@@ -40,11 +41,11 @@ class ASMParser{
   OpcodeTable opcodes;                     // encodings of opcodes
   int myLabelAddress;   // Used to assign labels addresses
 
-  // Decomposes a line of assembly code into strings for the opcode field and operands, 
+  // Decomposes a line of assembly code into strings for the opcode field and operands,
   // checking for syntax errors and counting the number of operands.
   void getTokens(string line, string &opcode, string *operand, int &num_operands);
 
-  // Given an Opcode, a string representing the operands, and the number of operands, 
+  // Given an Opcode, a string representing the operands, and the number of operands,
   // breaks operands apart and stores fields into Instruction.
   bool getOperands(Instruction &i, Opcode o, string *operand, int operand_count);
 
@@ -65,7 +66,7 @@ class ASMParser{
 
   // Returns true if character is an alphabetic character
   bool isAlpha(char c)         {return (isAlphaUpper(c) || isAlphaLower(c)); };
-  
+
   // Returns true if s represents a valid decimal integer
   bool isNumberString(string s);
 

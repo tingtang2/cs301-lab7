@@ -1,16 +1,15 @@
 #ifndef __OPCODE_H__
 #define __OPCODE_H__
 
-using namespace std;
-
 #include <iostream>
 #include <string>
 
+using namespace std;
 
 // Listing of all supported MIPS instructions
 enum Opcode {
-  ADD, 
-  ADDI, 
+  ADD,
+  ADDI,
   SUB,
   MULT,
   MFHI,
@@ -18,7 +17,7 @@ enum Opcode {
   SRA,
   SLTI,
   LW,
-  J, 
+  J,
   UNDEFINED
 };
 
@@ -26,21 +25,21 @@ enum Opcode {
 enum InstType{
   RTYPE,
   ITYPE,
-  JTYPE, 
+  JTYPE,
   INVALID
 };
 
 
 /* This class represents templates for supported MIPS instructions.  For every supported
  * MIPS instruction, the OpcodeTable includes information about the opcode, expected
- * operands, and other fields.  
+ * operands, and other fields.
  */
 class OpcodeTable {
  public:
   // Initializes all the fields for every instruction in Opcode enum
   OpcodeTable();
 
-  // Given a valid MIPS assembly mnemonic, returns an Opcode which represents a 
+  // Given a valid MIPS assembly mnemonic, returns an Opcode which represents a
   // template for that instruction.
   Opcode getOpcode(string str);
 
@@ -98,7 +97,7 @@ class OpcodeTable {
 
     // Creates an initial OpcodeTableEntry with default values
     OpcodeTableEntry(){
-      numOps = 0; 
+      numOps = 0;
       rdPos = rsPos = rtPos = immPos = -1;
       immLabel = false;
     };
