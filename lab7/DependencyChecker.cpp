@@ -26,17 +26,22 @@ void DependencyChecker::addInstruction(Instruction i)
   case RTYPE:
     // 2 source reg's rs,rt -> 2x checkForReadDependence
     // 1 dest reg rt -> 1x checkForReadDependence
-    checkForReadDependence(i.getRS());
-    checkForReadDependence(i.getRT());
-    checkForWriteDependence(i.getRD());
-    cout << '\n';
+    if (i.getRS() != 32)
+        checkForReadDependence(i.getRS());
+    if (i.getRT() != 32)
+        checkForReadDependence(i.getRT());
+    if (i.getRD() != 32)
+        checkForWriteDependence(i.getRD());
+    // cout << '\n';
     break;
   case ITYPE:
     // 1 source reg rs -> 1x checkForReadDependence
     // 1 dest reg rt -> 1x checkForReadDependence
-    checkForReadDependence(i.getRS());
-    checkForWriteDependence(i.getRT());
-    cout << '\n';
+    if (i.getRS() != 32)
+        checkForReadDependence(i.getRS());
+    if (i.getRT() != 32)
+        checkForWriteDependence(i.getRT());
+    // cout << '\n';
     break;
   case JTYPE:
     // Your code here
