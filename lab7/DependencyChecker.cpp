@@ -62,7 +62,12 @@ void DependencyChecker::checkForReadDependence(unsigned int reg)
     // check if prev instruction wrote to reg (RAW)
         if (myCurrentState.at(reg-1).accessType == WRITE) {
             // RAW dependency
-            TODO:add dependence to list
+            Dependence d;
+            d.dependenceType = RAW;
+            d.registerNumber = reg;
+            d.previousInstructionNumber = myCurrentState.at(reg-1).lastInstructionToAccess;
+            d.currentInstructionNumber = myInstructions.size();
+            myDependences.push_back(d);
         }
     }
 
@@ -94,15 +99,22 @@ void DependencyChecker::checkForWriteDependence(unsigned int reg)
         cout << "\tOLD: myCurrentState.at(" << reg-1 << ").lastInstructionToAccess: "
             << myCurrentState.at(reg-1).lastInstructionToAccess << '\n';
     // check if prev instruction read from reg (WAR), or wrote to reg (WAW)
+        Dependence d;
         if (myCurrentState.at(reg-1).accessType == READ) {
             // WAR dependency
-            TODO:add dependence to list
-
+            d.dependenceType = WAR;
+            d.registerNumber = reg;
+            d.previousInstructionNumber = myCurrentState.at(reg-1).lastInstructionToAccess;
+            d.currentInstructionNumber = myInstructions.size();
+            myDependences.push_back(d);
         }
         else if (myCurrentState.at(reg-1).accessType == WRITE) {
             // WAW dependency
-            TODO:add dependence to list
-        }
+            d.dependenceType = WAW;
+            d.registerNumber = reg;
+            d.previousInstructionNumber = myCurrentState.at(reg-1).lastInstructionToAccess;
+            d.currentInstructionNumber = myInstructions.size();
+            myDependences.push_back(d);        }
     }
     // Update RegisterInfo for reg - lastInstructionToAccess is now the current instruction
     myCurrentState.at(reg-1).lastInstructionToAccess = myInstructions.size();
