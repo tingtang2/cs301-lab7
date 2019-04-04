@@ -32,7 +32,7 @@ void DependencyChecker::addInstruction(Instruction i)
         checkForReadDependence(i.getRT());
     if (i.getRD() != 32)
         checkForWriteDependence(i.getRD());
-    cout << '\n';
+    //cout << '\n';
     break;
   case ITYPE:
     // 1 source reg rs -> 1x checkForReadDependence
@@ -41,7 +41,7 @@ void DependencyChecker::addInstruction(Instruction i)
         checkForReadDependence(i.getRS());
     if (i.getRT() != 32)
         checkForWriteDependence(i.getRT());
-    cout << '\n';
+    //cout << '\n';
     break;
   case JTYPE:
     // Your code here
@@ -62,8 +62,6 @@ void DependencyChecker::checkForReadDependence(unsigned int reg)
    */
 {
     if(myCurrentState.at(reg).lastInstructionToAccess != -1) { // reg read or written in prev instruction
-        cout << "\tOLD: myCurrentState.at(" << reg << ").lastInstructionToAccess: "
-            << myCurrentState.at(reg).lastInstructionToAccess << '\n';
     // check if prev instruction wrote to reg (RAW)
         if (myCurrentState.at(reg).accessType == WRITE) {
             // RAW dependency
@@ -78,14 +76,9 @@ void DependencyChecker::checkForReadDependence(unsigned int reg)
 
     // Update RegisterInfo for reg - lastInstructionToAccess is now the current instruction
     myCurrentState.at(reg).lastInstructionToAccess = myInstructions.size();
-        cout << "\tNEW: myCurrentState.at(" << reg << ").lastInstructionToAccess: " << myCurrentState.at(reg).lastInstructionToAccess << '\n';
 
     // Update RegisterInfo for reg - accessType is now READ
-        if(myCurrentState.at(reg).lastInstructionToAccess != -1)
-            cout << "\tOLD: myCurrentState.at(" << reg << ").accessType: "
-                << myCurrentState.at(reg).accessType << '\n';
     myCurrentState.at(reg).accessType = READ;
-    cout << "\tNEW: myCurrentState.at(" << reg << ").accessType: " << myCurrentState.at(reg).accessType << '\n';
 
   // Your code here
 
@@ -98,11 +91,8 @@ void DependencyChecker::checkForWriteDependence(unsigned int reg)
    * the appropriate RegisterInfo entry regardless of dependence detection.
    */
 {
-    cout << "checkForWriteDependence(" << reg << ")" << '\n';
 
     if(myCurrentState.at(reg).lastInstructionToAccess != -1) { // reg read or written in prev instruction
-        cout << "\tOLD: myCurrentState.at(" << reg << ").lastInstructionToAccess: "
-            << myCurrentState.at(reg).lastInstructionToAccess << '\n';
     // check if prev instruction read from reg (WAR), or wrote to reg (WAW)
         Dependence d;
         if (myCurrentState.at(reg).accessType == READ) {
@@ -123,14 +113,9 @@ void DependencyChecker::checkForWriteDependence(unsigned int reg)
     }
     // Update RegisterInfo for reg - lastInstructionToAccess is now the current instruction
     myCurrentState.at(reg).lastInstructionToAccess = myInstructions.size();
-        cout << "\tNEW: myCurrentState.at(" << reg << ").lastInstructionToAccess: " << myCurrentState.at(reg).lastInstructionToAccess << '\n';
 
     // Update RegisterInfo for reg - accessType is now READ
-        if(myCurrentState.at(reg).lastInstructionToAccess != -1)
-            cout << "\tOLD: myCurrentState.at(" << reg << ").accessType: "
-                << myCurrentState.at(reg).accessType << '\n';
     myCurrentState.at(reg).accessType = WRITE;
-        cout << "\tNEW: myCurrentState.at(" << reg << ").accessType: " << myCurrentState.at(reg).accessType << '\n';
   // Your code here
 
 }
