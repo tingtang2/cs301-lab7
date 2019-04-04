@@ -61,31 +61,31 @@ void DependencyChecker::checkForReadDependence(unsigned int reg)
    * the appropriate RegisterInfo entry regardless of dependence detection.
    */
 {
-    if(myCurrentState.at(reg-1).lastInstructionToAccess != -1) { // reg read or written in prev instruction
-        cout << "\tOLD: myCurrentState.at(" << reg-1 << ").lastInstructionToAccess: "
-            << myCurrentState.at(reg-1).lastInstructionToAccess << '\n';
+    if(myCurrentState.at(reg).lastInstructionToAccess != -1) { // reg read or written in prev instruction
+        cout << "\tOLD: myCurrentState.at(" << reg << ").lastInstructionToAccess: "
+            << myCurrentState.at(reg).lastInstructionToAccess << '\n';
     // check if prev instruction wrote to reg (RAW)
-        if (myCurrentState.at(reg-1).accessType == WRITE) {
+        if (myCurrentState.at(reg).accessType == WRITE) {
             // RAW dependency
             Dependence d;
             d.dependenceType = RAW;
             d.registerNumber = reg;
-            d.previousInstructionNumber = myCurrentState.at(reg-1).lastInstructionToAccess;
+            d.previousInstructionNumber = myCurrentState.at(reg).lastInstructionToAccess;
             d.currentInstructionNumber = myInstructions.size();
             myDependences.push_back(d);
         }
     }
 
     // Update RegisterInfo for reg - lastInstructionToAccess is now the current instruction
-    myCurrentState.at(reg-1).lastInstructionToAccess = myInstructions.size();
-        cout << "\tNEW: myCurrentState.at(" << reg-1 << ").lastInstructionToAccess: " << myCurrentState.at(reg-1).lastInstructionToAccess << '\n';
+    myCurrentState.at(reg).lastInstructionToAccess = myInstructions.size();
+        cout << "\tNEW: myCurrentState.at(" << reg << ").lastInstructionToAccess: " << myCurrentState.at(reg).lastInstructionToAccess << '\n';
 
     // Update RegisterInfo for reg - accessType is now READ
-        if(myCurrentState.at(reg-1).lastInstructionToAccess != -1)
-            cout << "\tOLD: myCurrentState.at(" << reg-1 << ").accessType: "
-                << myCurrentState.at(reg-1).accessType << '\n';
-    myCurrentState.at(reg-1).accessType = READ;
-    cout << "\tNEW: myCurrentState.at(" << reg-1 << ").accessType: " << myCurrentState.at(reg-1).accessType << '\n';
+        if(myCurrentState.at(reg).lastInstructionToAccess != -1)
+            cout << "\tOLD: myCurrentState.at(" << reg << ").accessType: "
+                << myCurrentState.at(reg).accessType << '\n';
+    myCurrentState.at(reg).accessType = READ;
+    cout << "\tNEW: myCurrentState.at(" << reg << ").accessType: " << myCurrentState.at(reg).accessType << '\n';
 
   // Your code here
 
@@ -100,37 +100,37 @@ void DependencyChecker::checkForWriteDependence(unsigned int reg)
 {
     cout << "checkForWriteDependence(" << reg << ")" << '\n';
 
-    if(myCurrentState.at(reg-1).lastInstructionToAccess != -1) { // reg read or written in prev instruction
-        cout << "\tOLD: myCurrentState.at(" << reg-1 << ").lastInstructionToAccess: "
-            << myCurrentState.at(reg-1).lastInstructionToAccess << '\n';
+    if(myCurrentState.at(reg).lastInstructionToAccess != -1) { // reg read or written in prev instruction
+        cout << "\tOLD: myCurrentState.at(" << reg << ").lastInstructionToAccess: "
+            << myCurrentState.at(reg).lastInstructionToAccess << '\n';
     // check if prev instruction read from reg (WAR), or wrote to reg (WAW)
         Dependence d;
-        if (myCurrentState.at(reg-1).accessType == READ) {
+        if (myCurrentState.at(reg).accessType == READ) {
             // WAR dependency
             d.dependenceType = WAR;
             d.registerNumber = reg;
-            d.previousInstructionNumber = myCurrentState.at(reg-1).lastInstructionToAccess;
+            d.previousInstructionNumber = myCurrentState.at(reg).lastInstructionToAccess;
             d.currentInstructionNumber = myInstructions.size();
             myDependences.push_back(d);
         }
-        else if (myCurrentState.at(reg-1).accessType == WRITE) {
+        else if (myCurrentState.at(reg).accessType == WRITE) {
             // WAW dependency
             d.dependenceType = WAW;
             d.registerNumber = reg;
-            d.previousInstructionNumber = myCurrentState.at(reg-1).lastInstructionToAccess;
+            d.previousInstructionNumber = myCurrentState.at(reg).lastInstructionToAccess;
             d.currentInstructionNumber = myInstructions.size();
             myDependences.push_back(d);        }
     }
     // Update RegisterInfo for reg - lastInstructionToAccess is now the current instruction
-    myCurrentState.at(reg-1).lastInstructionToAccess = myInstructions.size();
-        cout << "\tNEW: myCurrentState.at(" << reg-1 << ").lastInstructionToAccess: " << myCurrentState.at(reg-1).lastInstructionToAccess << '\n';
+    myCurrentState.at(reg).lastInstructionToAccess = myInstructions.size();
+        cout << "\tNEW: myCurrentState.at(" << reg << ").lastInstructionToAccess: " << myCurrentState.at(reg).lastInstructionToAccess << '\n';
 
     // Update RegisterInfo for reg - accessType is now READ
-        if(myCurrentState.at(reg-1).lastInstructionToAccess != -1)
-            cout << "\tOLD: myCurrentState.at(" << reg-1 << ").accessType: "
-                << myCurrentState.at(reg-1).accessType << '\n';
-    myCurrentState.at(reg-1).accessType = WRITE;
-        cout << "\tNEW: myCurrentState.at(" << reg-1 << ").accessType: " << myCurrentState.at(reg-1).accessType << '\n';
+        if(myCurrentState.at(reg).lastInstructionToAccess != -1)
+            cout << "\tOLD: myCurrentState.at(" << reg << ").accessType: "
+                << myCurrentState.at(reg).accessType << '\n';
+    myCurrentState.at(reg).accessType = WRITE;
+        cout << "\tNEW: myCurrentState.at(" << reg << ").accessType: " << myCurrentState.at(reg).accessType << '\n';
   // Your code here
 
 }
