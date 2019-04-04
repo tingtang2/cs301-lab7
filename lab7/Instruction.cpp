@@ -5,6 +5,7 @@ Instruction::Instruction()
 {
   myOpcode = UNDEFINED;
   myRS = myRT = myRD = NumRegisters;
+  myImmediate = 0;
   myEncoding = "";
   myAssembly = "";
 }
@@ -17,6 +18,7 @@ Instruction::Instruction(const Instruction & ref)
   myRS = ref.myRS;
   myRT = ref.myRT;
   myRD = ref.myRD;
+  myImmediate = ref.myImmediate;
   myEncoding = ref.myEncoding;
   myAssembly = ref.myAssembly;
 }
