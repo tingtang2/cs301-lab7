@@ -44,7 +44,7 @@ void DependencyChecker::addInstruction(Instruction i)
     //cout << '\n';
     break;
   case JTYPE:
-    // Your code here
+    // no dependencies
     break;
   default:
     // do nothing
@@ -79,9 +79,6 @@ void DependencyChecker::checkForReadDependence(unsigned int reg)
 
     // Update RegisterInfo for reg - accessType is now READ
     myCurrentState.at(reg).accessType = READ;
-
-  // Your code here
-
 }
 
 
@@ -116,8 +113,6 @@ void DependencyChecker::checkForWriteDependence(unsigned int reg)
 
     // Update RegisterInfo for reg - accessType is now READ
     myCurrentState.at(reg).accessType = WRITE;
-  // Your code here
-
 }
 
 
